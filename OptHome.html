@@ -24,7 +24,8 @@
         <div class="navbar-title">OCP 全渠道数字平台</div>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="RetailerLogin.html" id="signout" onclick="delRtCookie(username)">注销</a>
+                <!--点注销的时候会删除cookie-->
+                <a class="nav-link" href="RetailerLogin.html" id="signout" onclick="delOpCookie(username)">注销</a>
             </li>
         </ul>
     </nav>
@@ -44,26 +45,25 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="SubmitOrder.html">
-                                <span data-feather="file"></span>
-                                1 提交订单
+                            <a class="nav-link dropdown-menu" href="SubmitOrder.html">
+                                
+                                <a class="dropdown-item" href="#">1 提交订单</a>
+                                <a class="dropdown-item" href="#">Link 2</a>
+                                <a class="dropdown-item" href="#">Link 3</a>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="UnhandledOrders.html">
-                                <span data-feather="shopping-cart"></span>
                                 2 待处理订单
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="PurchaseOrders.html">
-                                <span data-feather="users"></span>
                                 3 采购订单
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="ReatilOrders.html">
-                                <span data-feather="bar-chart-2"></span>
                                 4 零售订单
                             </a>
 
@@ -141,13 +141,13 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/ocp.js"></script>
     <script>
-        var username = getCookie("rt_username");
+        // var username = getCookie("op_username");
 
-        if (username == "") {
-            window.location.replace("RetailerLogin.html");
-        } else {
-            document.getElementById("name").innerHTML = "你好！经销商 " + username;
-        }
+        // if (username == "") {
+        //     window.location.replace("OptLogin.html");
+        // } else {
+        //     document.getElementById("name").innerHTML = "你好！运营人员 " + username;
+        // }
 
     </script>
 

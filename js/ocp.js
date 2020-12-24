@@ -14,15 +14,12 @@ function getCookie(cname) {
     return "";
 }
 
-//删除cookie
-function delCookie(cname) {
-    document.cookie='username=' + cname + ';expires=Thu, 01 Jan 1970 00:00:00 GMT';
+//删除经销商cookie
+function delRtCookie(cname) {
+    document.cookie='rt_username=' + cname + ';expires=Thu, 01 Jan 1970 00:00:00 GMT';
 }
 
-//检查cookie
-function checkCookie() {
-    var user = getCookie("username");
-    if (user == "") {
-        window.location.replace("RetailerLogin.html");
-    }
+//删除运营cookie
+function delOpCookie(cname) {
+    document.cookie='op_username=' + cname + ';expires=Thu, 01 Jan 1970 00:00:00 GMT';
 }
