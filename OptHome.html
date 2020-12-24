@@ -25,7 +25,7 @@
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <!--点注销的时候会删除cookie-->
-                <a class="nav-link" href="RetailerLogin.html" id="signout" onclick="delOpCookie(username)">注销</a>
+                <a class="nav-link" href="OptLogin.html" id="signout" onclick="delOpCookie(username)">注销</a>
             </li>
         </ul>
     </nav>
@@ -45,31 +45,56 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link dropdown-menu" href="SubmitOrder.html">
-                                
-                                <a class="dropdown-item" href="#">1 提交订单</a>
-                                <a class="dropdown-item" href="#">Link 2</a>
-                                <a class="dropdown-item" href="#">Link 3</a>
+                            <a class="nav-link">
+                                1 备货订单管理
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="UnhandledOrders.html">
-                                2 待处理订单
+                            <a class="nav-link" href="ReviewStockOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;审核备货订单
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="PurchaseOrders.html">
-                                3 采购订单
+                            <a class="nav-link" href="ReReviewStockOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;复核备货订单
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="ReatilOrders.html">
-                                4 零售订单
+                            <a class="nav-link" href="AllStockOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;查看所有备货订单
                             </a>
-
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                2 批发订单管理
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ReviewWSOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;审核批发订单
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ReReviewWSOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;复核批发订单
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="AllWSOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;查看所有批发订单
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                3 零售订单管理
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="AllRetailOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;查看所有零售订单
+                            </a>
+                        </li>
                     </ul>
-
-
 
                 </div>
             </nav>
@@ -141,16 +166,15 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/ocp.js"></script>
     <script>
-        // var username = getCookie("op_username");
+        var username = getCookie("op_username");
 
-        // if (username == "") {
-        //     window.location.replace("OptLogin.html");
-        // } else {
-        //     document.getElementById("name").innerHTML = "你好！运营人员 " + username;
-        // }
+        if (username == "") {
+            window.location.replace("OptLogin.html");
+        } else {
+            document.getElementById("name").innerHTML = "你好！运营人员 " + username;
+        }
 
     </script>
-
 </body>
 
 </html>

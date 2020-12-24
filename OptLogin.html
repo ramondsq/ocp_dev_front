@@ -68,7 +68,7 @@
                         $("#info").addClass("alert alert-success");
                         $("#info").html("登录成功");
                         //设置cookie
-                        setOpCookie("op_username", username);
+                        setCookie("op_username", username);
                         //登录成功 2s 后跳转
                         setTimeout(function () { window.location.replace("OptHome.html") }, 1500);
                         
