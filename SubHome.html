@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>经销商主页</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <div class="navbar-title">OCP 全渠道数字平台</div>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="RetailerLogin.html" id="signout">注销</a>
+                <a class="nav-link" href="RetailerLogin.html" id="signout" onclick="delCookie(username)">注销</a>
             </li>
         </ul>
     </nav>
@@ -66,7 +66,7 @@
                                 <span data-feather="bar-chart-2"></span>
                                 4 零售订单
                             </a>
-                        
+
                     </ul>
 
 
@@ -78,7 +78,7 @@
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">你好！经销商</h1>
+                    <h1 class="h2" id="name">未登录 :(</h1>
                 </div>
 
                 <!--图片轮播-->
@@ -139,7 +139,17 @@
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/ocp.js"></script>
+    <script>
+        var username = getCookie("username");
 
+        if (username == "") {
+            window.location.replace("RetailerLogin.html");
+        } else {
+            document.getElementById("name").innerHTML = "你好！" + username;
+        }
+
+    </script>
 
 </body>
 

@@ -48,6 +48,7 @@
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/ocp.js"></script>
 <script>
     //登录判断函数
     $(function () {
@@ -66,9 +67,11 @@
                         $("#info").removeClass("alert-danger");
                         $("#info").addClass("alert alert-success");
                         $("#info").html("登录成功");
+                        //设置cookie
+                        setCookie("username", username);
                         //登录成功 2s 后跳转
                         setTimeout(function () { window.location.replace("SubHome.html") }, 1500);
-
+                        
                     } else {
                         $("#info").css("visibility", "visible");
                         $("#info").addClass("alert alert-danger");
@@ -79,6 +82,7 @@
             );
         });
     });
+    
 </script>
 
 </html>

@@ -65,7 +65,7 @@ body {
   text-transform: uppercase;
 }
 
-a.nav-link:hover {
+.sidebar a.nav-link:hover {
   background-color: #c1c1c1;
 }
 
