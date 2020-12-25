@@ -86,6 +86,17 @@ a.btn {
   
 }
 
+div#btn {
+  margin: auto;
+  width: 50%;
+}
+
+.cosbtn {
+  margin-left: 45px;
+  margin-left: 45px;
+}
+
+
 /*
    * Navbar
    */

@@ -125,7 +125,64 @@
                     </div>
                     <div class="col">备注：<input type="text"></div>
                 </div>
+                <br />
 
+                <!--表格-->
+                <div class="container">
+                    <table class="table table-bordered">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>序号</th>
+                                <th>产品编码</th>
+                                <th>产品名称</th>
+                                <th>品类</th>
+                                <th>数量（件）</th>
+                                <th>开票价（元）</th>
+                                <th>金额（元）</th>
+                                <th>体积（m³）</th>
+                                <th>近三个月月均零售数量</th>
+                                <th>近三个月月均零售销售额</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#" id="del">删除</a></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="11"><a href="#" id="add">添加</a></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="bg-light">订单合计</td>
+                                <td colspan="9">
+                                    总数量：<span id="totalCount"></span>件 &nbsp;
+                                    总体积：<span id="totalVolume"></span>m³ &nbsp;
+                                    总金额：<span id="totalPrice"></span>元 &nbsp;
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <br/>
+
+                <!--按钮-->
+                <div id="btn">
+                    <button type="button" class="btn btn-secondary cosbtn" disabled>上一步</button>
+                    <button type="button" class="btn btn-danger cosbtn">提交</button>
+                    <button type="button" class="btn btn-outline-secondary cosbtn">保存至待处理订单列表</button>
+                </div>
 
 
 
@@ -142,34 +199,7 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/ocp.js"></script>
-    <script>
-        var username = getCookie("rt_username");
-
-        if (username == "") {
-            window.location.replace("RetailerLogin.html");
-        } else {
-            document.getElementById("signoutl").innerHTML = username;
-        }
-
-        var page = "http://127.0.0.1/ocp_dev/getRetailerInfo";
-
-        $.get(
-            page,
-            { "retailer_user_name": username },
-            function (result) {
-                var rtname = result.retailer[0].retailer_name;
-                var rtid = result.retailer[0].retailer_id;
-                var rtstore = result.retailer[0].retailer_store_name;
-                var rtarea = result.retailer[0].retailer_area;
-
-                document.getElementById("rtname").innerHTML = rtname;
-                document.getElementById("rtid").innerHTML = rtid;
-                document.getElementById("rtstore").innerHTML = rtstore;
-                document.getElementById("rtarea").innerHTML = rtarea;
-            }
-        )
-
-    </script>
+    <script src="js/SubmitOdr.js"></script>
 
 </body>
 
