@@ -24,6 +24,7 @@
         <div class="navbar-title">OCP 全渠道数字平台</div>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
+                <a class="nav-link" id="signoutl"></a>&nbsp;&nbsp;
                 <a class="nav-link" href="RetailerLogin.html" id="signout" onclick="delRtCookie(username)">注销</a>
             </li>
         </ul>
@@ -144,6 +145,7 @@
             window.location.replace("RetailerLogin.html");
         } else {
             document.getElementById("name").innerHTML = "你好！经销商 " + username;
+            document.getElementById("signoutl").innerHTML = username;
         }
 
     </script>
