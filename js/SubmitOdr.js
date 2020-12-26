@@ -7,6 +7,7 @@ if (username == "") {
     document.getElementById("signoutl").innerHTML = username;
 }
 
+//获取经销商信息
 var page = "http://127.0.0.1/ocp_dev/getRetailerInfo";
 
 $.get(
@@ -22,6 +23,17 @@ $.get(
         document.getElementById("rtid").innerHTML = rtid;
         document.getElementById("rtstore").innerHTML = rtstore;
         document.getElementById("rtarea").innerHTML = rtarea;
+    }
+);
+
+//获取仓库信息
+$.get(
+    "http://127.0.0.1/ocp_dev/getAllWarehouses",
+    function (result) {
+        for (var i=0; i<result.count; i++) {
+            $("#whs").append("<option value='"+(i+1)+"'>"+
+            result.warehouse[i].warehouse_name+"</option>")
+        }
     }
 );
 
