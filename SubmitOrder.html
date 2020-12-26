@@ -23,7 +23,6 @@
                 <!-- 模态框头部 -->
                 <div class="modal-header">
                     <h4 class="modal-title">选择订单类型</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- 模态框主体 -->
@@ -104,15 +103,23 @@
                 <br />
                 <div class="row">
                     <div class="col">区域：<span id="rtarea">热水事业部华南区</span></div>
-                    <div class="col">提货方式：配送</div>
+                    <div class="col">提货方式：
+                        <select name="picup" id="picup">
+                            <option value="deli">配送</option>
+                        </select>
+                    </div>
                     <div class="col">出货仓库：
                         <select name="wh" id="whs">
                         </select>
                     </div>
                 </div>
                 <br />
-                <div class="row">
-                    <div class="col">备货需求时间段：
+
+                <div class="row" id="row3"></div>
+                <br />
+
+                <div class="row" id="row4">
+                    <div class="col" id="reqtime">备货需求时间段：
                         <select name="year">
                             <option value="2020">2020</option>
                             <option value="2021">2021</option>
@@ -139,7 +146,7 @@
                     </div>
                     <div class="col">备注：<input type="text"></div>
                 </div>
-                <br />
+                <br /><br />
 
                 <!--表格-->
                 <div class="container">
