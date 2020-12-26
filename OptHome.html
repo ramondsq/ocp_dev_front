@@ -8,13 +8,13 @@
     <meta name="author" content="">
     <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">
 
-    <title>经销商主页</title>
+    <title>运营人员主页</title>
 
-    <!-- Bootstrap core CSS -->
+    <!-- Bootstrap CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/subhome.css" rel="stylesheet">
+    <!-- 自定义 css -->
+    <link href="css/SubHome.css" rel="stylesheet">
 </head>
 
 <body>
@@ -24,6 +24,7 @@
         <div class="navbar-title">OCP 全渠道数字平台</div>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
+                <a class="nav-link" id="signoutl"></a>&nbsp;&nbsp;
                 <!--点注销的时候会删除cookie-->
                 <a class="nav-link" href="OptLogin.html" id="signout" onclick="delOpCookie(username)">注销</a>
             </li>
@@ -158,13 +159,14 @@
     </div>
 
 
-    <!-- Bootstrap core JavaScript
+    <!-- Bootstrap JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- js 放在底部页面加载更快 -->
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/ocp.js"></script>
+    <!-- 自定义 js -->
+    <script src="js/OCP.js"></script>
     <script>
         var username = getCookie("op_username");
 
@@ -172,6 +174,7 @@
             window.location.replace("OptLogin.html");
         } else {
             document.getElementById("name").innerHTML = "你好！运营人员 " + username;
+            document.getElementById("signoutl").innerHTML = username;
         }
 
     </script>

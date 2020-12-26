@@ -1,3 +1,6 @@
+/* 所有页面共用的 js */
+
+
 //设置cookie
 function setCookie(cname,cvalue){
 	document.cookie = cname+"="+cvalue+";";
