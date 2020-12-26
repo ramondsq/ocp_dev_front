@@ -18,6 +18,27 @@
 </head>
 
 <body>
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">选择订单类型</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="ws">批发采购</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="sto">备货需求</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <!--顶栏-->
     <nav class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">万家乐 OCP</a>
@@ -175,7 +196,7 @@
                         </tfoot>
                     </table>
                 </div>
-                <br/>
+                <br />
 
                 <!--按钮-->
                 <div id="btn">

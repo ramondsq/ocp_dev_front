@@ -96,6 +96,14 @@ div#btn {
   margin-left: 45px;
 }
 
+.modal-body {
+  text-align:center
+}
+
+.modal-body button {
+  margin-left: 50px;
+  margin-right: 50px;
+}
 
 /*
    * Navbar

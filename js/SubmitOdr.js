@@ -1,3 +1,4 @@
+//获取cookie，身份认证
 var username = getCookie("rt_username");
 
 if (username == "") {
@@ -23,6 +24,21 @@ $.get(
         document.getElementById("rtarea").innerHTML = rtarea;
     }
 );
+
+//弹出modal
+$("#myModal").modal();
+
+var odrType;
+
+$("#ws").click(function(){
+    odrType = "ws";
+    $(".h5").append("（批发订单）");
+});
+
+$("#sto").click(function(){
+    odrType = "sto";
+    $(".h5").append("（备货订单）");
+});
 
 //“增加”按钮
 $("#add").click(function () {
