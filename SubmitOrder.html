@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <!-- 模态框 -->
+    <!-- 模态框：选择类型 -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -29,6 +29,72 @@
                 <div class="modal-body">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="ws">批发采购</button>
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="sto">备货需求</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框：添加商品 -->
+    <div class="modal fade" id="addItem">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">添加商品</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="getProducts()">&times;</button>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">产品编码：<input type="text"></div>
+                        <div class="col">产品型号：<input type="text"></div>
+                        <div class="col">类目：
+                            <select>
+                                <option>电子</option>
+                                <option>日用</option>
+                                <option>服饰</option>
+                                <option>化妆品</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="getProducts()">查询</button>
+                        </div>
+                    </div>
+                    <br/>
+                    <!--表格-->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>产品编码</th>
+                                <th>产品型号</th>
+                                <th>产品名称</th>
+                                <th>类目</th>
+                                <th>体积（m³)</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modl">
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td id="pid"></td>
+                                <td id="pmod"></td>
+                                <td id="pname"></td>
+                                <td id="ptype"></td>
+                                <td id="pvol"></td>
+                                <td><a href="#">查看详情</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="addToTable()">确定</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
                 </div>
 
             </div>
@@ -120,31 +186,31 @@
 
                 <div class="row" id="row4">
                     <div class="col" id="reqtime">备货需求时间段：
-                        <select name="year">
+                        <select name="year" id="yy">
                             <option value="2020">2020</option>
                             <option value="2021">2021</option>
                         </select>&nbsp;年
-                        <select name="month">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
+                        <select name="month" id="mm">
+                            <option value="01">1</option>
+                            <option value="02">2</option>
+                            <option value="03">3</option>
+                            <option value="04">4</option>
+                            <option value="05">5</option>
+                            <option value="06">6</option>
+                            <option value="07">7</option>
+                            <option value="08">8</option>
+                            <option value="09">9</option>
                             <option value="10">10</option>
                             <option value="11">11</option>
                             <option value="12">12</option>
                         </select>&nbsp;月
-                        <select name="day">
-                            <option value="1">上旬</option>
+                        <select name="day" id="dd">
+                            <option value="01">上旬</option>
                             <option value="11">中旬</option>
                             <option value="20">下旬</option>
                         </select>
                     </div>
-                    <div class="col">备注：<input type="text"></div>
+                    <div class="col">备注：<input type="text" id="rmk"></div>
                 </div>
                 <br /><br />
 
@@ -166,16 +232,16 @@
                                 <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
+                        <tbody id="pdout">
+                            <tr id="item">
+                                <td id="1">1</td>
+                                <td id="pid"></td>
+                                <td id="pname"></td>
+                                <td id="ptype"></td>
+                                <td id="pqty"></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td id="pprice"></td>
+                                <td id="pvol"></td>
                                 <td></td>
                                 <td></td>
                                 <td><a href="#" id="del">删除</a></td>
@@ -189,7 +255,7 @@
                                 <td colspan="2" class="bg-light">订单合计</td>
                                 <td colspan="9">
                                     总数量：<span id="totalCount"></span>件 &nbsp;
-                                    总体积：<span id="totalVolume"></span>m³ &nbsp;
+                                    总体积：<span id="totalVol"></span>m³ &nbsp;
                                     总金额：<span id="totalPrice"></span>元 &nbsp;
                                 </td>
                             </tr>
@@ -201,7 +267,7 @@
                 <!--底部按钮-->
                 <div id="btn">
                     <button type="button" class="btn btn-secondary cosbtn" disabled>上一步</button>
-                    <button type="button" class="btn btn-danger cosbtn">提交</button>
+                    <button type="button" class="btn btn-danger cosbtn" onclick="submitStockOrder()">提交</button>
                     <button type="button" class="btn btn-outline-secondary cosbtn">保存至待处理订单列表</button>
                 </div>
 
@@ -220,7 +286,6 @@
     <!-- 自定义 js -->
     <script src="js/OCP.js"></script>
     <script src="js/SubmitOdr.js"></script>
-
 </body>
 
 </html>

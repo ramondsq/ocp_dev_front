@@ -10,6 +10,8 @@ if (username == "") {
 //弹出modal，选择订单类型
 $("#myModal").modal();
 
+
+//订单类型选择
 var odrType;
 
 $("#ws").click(function () {
@@ -35,6 +37,7 @@ $("#sto").click(function () {
 });
 
 //获取经销商信息
+var retailer_id;
 function getRetInfo() {
     $.get(
         "http://127.0.0.1/ocp_dev/getRetailerInfo",
@@ -42,6 +45,7 @@ function getRetInfo() {
         function (result) {
             var rtname = result.retailer[0].retailer_name;
             var rtid = result.retailer[0].retailer_id;
+            retailer_id = rtid;
             var rtstore = result.retailer[0].retailer_store_name;
             var rtarea = result.retailer[0].retailer_area;
             var rtconta = result.retailer[0].retailer_contact_name;
@@ -56,36 +60,36 @@ function getRetInfo() {
 }
 
 
-
-
 //获取仓库信息
 $.get(
-    "http://127.0.0.1/ocp_dev/getAllWarehouses",
+    "http://127.0.0.1/ocp_dev/getAllWHNameNId",
     function (result) {
         for (var i = 0; i < result.count; i++) {
             $("#whs").append("<option value='" + (i + 1) + "'>" +
-                result.warehouse[i].warehouse_name + "</option>")
+                result.warehouse[i].warehouse_name + "</option>");
         }
     }
 );
 
+
+
 //“增加”按钮
 $("#add").click(function () {
-    var num = $("tbody tr:last td:first").text();
+    var num = $("tbody#pdout tr:last td:first").text();
     var number = 0;
     if (num != null) {
         var number = Number(num);
     }
     number += 1;
-    $("tbody tr:last").after("<tr>" +
-        "<td>" + number + "</td>" +
+    $("tbody#pdout tr:last").after("<tr id='item'>" +
+        "<td id='" + number + "'>" + number + "</td>" +
+        "<td id='pid'></td>" +
+        "<td id='pname'></td>" +
+        "<td id='ptype'></td>" +
+        "<td id='pqty'></td>" +
         "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
-        "<td></td>" +
+        "<td id='pprice'></td>" +
+        "<td id='pvol'></td>" +
         "<td></td>" +
         "<td></td>" +
         "<td><a href='#' id='del'>删除</a></td>" +
@@ -93,8 +97,13 @@ $("#add").click(function () {
 
     $("tr td").on("mouseenter", "#del", function () {
         $(this).click(function () {
-            console.log("1");
             $(this).parents("tr").remove();
+        });
+    });
+
+    $("tbody#pdout tr").on("mouseenter", "td", function () {
+        $(this).click(function () {
+            $("#addItem").modal();
         });
     });
 });
@@ -103,3 +112,133 @@ $("#add").click(function () {
 $("#del").click(function () {
     $(this).parents("tr").remove();
 });
+//单击序号添加产品
+$("tr#item td:first-child").click(function () {
+    $("#addItem").modal();
+});
+
+
+//modal里面表格新增一行
+function addNewRow() {
+    $("tbody#modl tr:last").after("<tr>" +
+        "<td><input type='checkbox'></td>" +
+        "<td id='pid'></td>" +
+        "<td id='pmod'></td>" +
+        "<td id='pname'></td>" +
+        "<td id='ptype'></td>" +
+        "<td id='pvol'></td>" +
+        "<td><a href='#'>查看详情</a></td>" +
+        "</tr>");
+};
+
+//modal 内表格 删除最后一行
+function delRow() {
+    $("tbody#modl tr:last").remove();
+};
+
+//获取全部产品
+var totalCount = 0;
+var totalVol = 0;
+var totalPrice = 0;
+var productJSON;
+function getProducts() {
+    $.get(
+        "http://127.0.0.1/ocp_dev/getAllProducts",
+        function (result) {
+            productJSON = result;
+            for (var i = 0; i < result.products.length; i++) {
+                $("tbody#modl tr:last td#pid").html(result.products[i].product_id);
+                $("tbody#modl tr:last td#pmod").html(result.products[i].product_model);
+                $("tbody#modl tr:last td#pname").html(result.products[i].product_name);
+                $("tbody#modl tr:last td#ptype").html(result.products[i].product_type);
+                $("tbody#modl tr:last td#pvol").html(result.products[i].product_volume);
+                addNewRow();
+            }
+            delRow();
+        }
+    );
+};
+
+//按下“确认”添加产品详情
+function addToTable() {
+    var pid = $('input[type=checkbox]:checked').parent().siblings("#pid").text();
+    pid--;
+    $("tbody#pdout tr:last td#pid").text((pid + 1));
+    var pname = productJSON.products[pid].product_name;
+    $("tbody#pdout tr:last td#pname").text(pname);
+    var ptype = productJSON.products[pid].product_type;
+    $("tbody#pdout tr:last td#ptype").text(ptype);
+    var pqty = productJSON.products[pid].product_qty;
+    $("tbody#pdout tr:last td#pqty").text(pqty);
+    var pprice = productJSON.products[pid].product_standard_price;
+    $("tbody#pdout tr:last td#pprice").text(pprice);
+    var pvol = productJSON.products[pid].product_volume;
+    $("tbody#pdout tr:last td#pvol").text(pvol);
+    //设置 checkbox 状态为未选中
+    $('input[type=checkbox]:checked').prop("checked", false);
+
+    totalCount += pqty;
+    totalVol += pvol;
+    totalPrice += pprice;
+
+    refreshTableButtom();
+}
+
+//刷新表格底部信息
+function refreshTableButtom() {
+    $("span#totalCount").text(totalCount);
+    $("span#totalVol").text(totalVol);
+    $("span#totalPrice").text(totalPrice);
+}
+
+//提交备货订单函数
+function submitStockOrder() {
+    var invoice_title = "抬头1";
+    var out_warehouse_id = $("#whs option:selected").val();
+    var in_warehouse_id = 2;
+    var period_demand = $("#yy option:selected").val() + $("#mm option:selected").val() + $("#dd option:selected").val();
+    var remark = $("#rmk").val();
+    var products = '{"productList":[';
+
+    var pdcount = $("tbody#pdout tr:last td:first").text();
+
+    for (var i = 0; i < pdcount; i++) {
+        var no = i + 1;
+        var pid = $("td#" + no).siblings("pid").text();
+        var pqty = productJSON.products[pid+1].product_qty;
+        var iprice = productJSON.products[pid+1].product_standard_price;
+        var ttprice = pqty * iprice;
+        var vol = productJSON.products[pid+1].product_volume;
+
+        products += '{ "product_id":' + pid + ', ';
+        products += ' "product_qty":' + pqty + ', ';
+        products += ' "invoice_price":' + iprice + ', ';
+        products += ' "total_price":' + ttprice + ', ';
+        products += ' "volume":' + vol + '},';
+
+    }
+
+    products += ']}';
+
+    var productList = JSON.parse(products);
+
+    $.post(
+        "http://127.0.0.1/ocp_dev/submitStockOrder",
+        {
+            "invoice_title": invoice_title,
+            "retailer_id": retailer_id,
+            "out_warehouse_id": out_warehouse_id,
+            "in_warehouse_id": in_warehouse_id,
+            "period_demand": period_demand,
+            "remark": remark,
+            "productList": productList
+        },
+        function(result) {
+            if (result.code == 1) {
+                alert("提交成功");
+            } else {
+                alert("提交失败");
+            }
+        }
+    );
+}
