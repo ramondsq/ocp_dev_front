@@ -97,6 +97,13 @@ $("#add").click(function () {
 
     $("tr td").on("mouseenter", "#del", function () {
         $(this).click(function () {
+            var pid = $(this).parent().siblings("#pid").text() - 1;
+
+            totalCount -= productJSON.products[pid].product_qty;
+            totalVol -= productJSON.products[pid].product_volume;
+            totalPrice -= productJSON.products[pid].product_standard_price;
+
+            refreshTableButtom();
             $(this).parents("tr").remove();
         });
     });
@@ -110,10 +117,20 @@ $("#add").click(function () {
 
 //“删除”按钮
 $("#del").click(function () {
+    var pid = $(this).parent().siblings("#pid").text() - 1;
+
+    totalCount -= productJSON.products[pid].product_qty;
+    totalVol -= productJSON.products[pid].product_volume;
+    totalPrice -= productJSON.products[pid].product_standard_price;
+
+    refreshTableButtom();
     $(this).parents("tr").remove();
 });
+
+
+
 //单击序号添加产品
-$("tr#item td:first-child").click(function () {
+$("tr#item td").click(function () {
     $("#addItem").modal();
 });
 
@@ -205,10 +222,10 @@ function submitStockOrder() {
     for (var i = 0; i < pdcount; i++) {
         var no = i + 1;
         var pid = $("td#" + no).siblings("pid").text();
-        var pqty = productJSON.products[pid+1].product_qty;
-        var iprice = productJSON.products[pid+1].product_standard_price;
+        var pqty = productJSON.products[pid + 1].product_qty;
+        var iprice = productJSON.products[pid + 1].product_standard_price;
         var ttprice = pqty * iprice;
-        var vol = productJSON.products[pid+1].product_volume;
+        var vol = productJSON.products[pid + 1].product_volume;
 
         products += '{ "product_id":' + pid + ', ';
         products += ' "product_qty":' + pqty + ', ';
@@ -233,7 +250,7 @@ function submitStockOrder() {
             "remark": remark,
             "productList": productList
         },
-        function(result) {
+        function (result) {
             if (result.code == 1) {
                 alert("提交成功");
             } else {
