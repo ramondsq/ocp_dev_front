@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>待审核批发订单</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 自定义css -->
+    <link href="css/RevWSOdr.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- 模态框：审核订单 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">订单审核</h4>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="pass">审核通过</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="notpass">不通过</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--顶栏-->
+    <nav class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">万家乐 OCP</a>
+        <div class="navbar-title">OCP 全渠道数字平台</div>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" id="signoutl">未登录</a>&nbsp;&nbsp;
+                <a class="nav-link" href="OptLogin.html" id="signout" onclick="delRtCookie(username)">注销</a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <!--左侧栏-->
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="OptHome.html">
+                                <span data-feather="home"></span>
+                                首页 <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                1 备货订单管理
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ReviewStockOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;审核备货订单
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ReReviewStockOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;复核备货订单
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="AllStockOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;查看所有备货订单
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                2 批发订单管理
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="">
+                                &nbsp;&nbsp;&nbsp;&nbsp;审核批发订单
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="ReReviewWSOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;复核批发订单
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="AllWSOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;查看所有批发订单
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                3 零售订单管理
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="AllRetailOdrs.html">
+                                &nbsp;&nbsp;&nbsp;&nbsp;查看所有零售订单
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+
+            <!--内容部分-->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+                    <h1 class="h5"></h1>
+                </div>
+
+                <div class="row">
+                    <div class="col">经销商编码：<input type="text"></div>
+                    <div class="col">区域：<input type="text"></div>
+                    <div class="col">订单日期：<input type="text"></div>
+                    <div class="col">至 <input type="text"></div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col">经销商名称：<input type="text"></div>
+                    <div class="col">订单编号：<input type="text"></div>
+                    
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col">产品编码：<input type="text"></div>
+                    <div class="col">产品型号：<input type="text"></div>
+                    <div class="col">品类：
+                        <select>
+                            <option>电热水器</option>
+                            <option>燃气热水器</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-danger btn-sm">查询</button>
+                    </div>
+                </div>
+                <br />
+
+                <!-- 表格 -->
+                <table class="table table-bordered">
+                    <!--表头-->
+                    <thead class="thead-light">
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>序号</th>
+                            <th>下单日期</th>
+                            <th>订单编号</th>
+                            <th>产品编码</th>
+                            <th>产品型号</th>
+                            <th>品类</th>
+                            <th>经销商编码</th>
+                            <th>经销商名称</th>
+                            <th>区域</th>
+                            <th>总数量</th>
+                            <th>开票价格</th>
+                            <th>总金额</th>
+                            <th>总体积</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <!--表身-->
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a href="">查看详情</a>
+                                <a href="" data-toggle="modal" data-target="#myModal">审核</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <!--表尾-->
+                    <tfoot>
+                        <tr>
+                            <td colspan="15">
+                                <b>小计</b>
+                                数量：<span>200</span>件
+                                体积：<span>100</span>m³
+                                订单金额：<span>3550.00</span>元
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!--页码-->
+                <div>
+                    <ul class="pagination">
+                        <li class="page-item disabled"><a class="page-link" href="#">上一页</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                    </ul>
+                </div>
+
+                <!--底部汇总信息-->
+                <div id="info">
+                    <span><b>汇总信息</b></span>
+                    <span class="right">订单金额：</span>
+                </div>
+
+
+
+
+            </main>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JavaScript
+    ================================================== -->
+    <!-- 放在底部页面加载更快 -->
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- 自定义 js -->
+    <script src="js/OCP.js"></script>
+    <script src="js/RevWSOdr.js"></script>
+</body>
+
+</html>
