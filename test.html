@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p id="jieguo"></p>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script>
+        
+
+        $.ajax({
+            url: "http://127.0.0.1/ocp_dev/submitStockOrder",
+            contentType: "application/json",
+            dataType: "json",
+            method: "POST",
+            data: JSON.stringify({
+                "invoice_title": "抬头1",
+                "retailer_id": 1,
+                "out_warehouse_id": 1,
+                "in_warehouse_id": 2,
+                "period_demand": "20201201",
+                "remark": "",
+                "productList": [
+                    {
+                        "product_id": 1,
+                        "product_qty": 20,
+                        "invoice_price": 20,
+                        "total_price": 20,
+                        "volume": 200
+                    },
+                    {
+                        "product_id": 2,
+                        "product_qty": 30,
+                        "invoice_price": 320,
+                        "total_price": 230,
+                        "volume": 2030
+                    }
+                ]
+            }),
+            success: function (result) {
+                if (result.code == 1) {
+                    $("#jieguo").html("成功");
+                } else {
+                    $("#jieguo").html("失败");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

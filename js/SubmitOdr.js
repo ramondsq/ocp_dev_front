@@ -221,23 +221,30 @@ function submitStockOrder() {
 
     for (var i = 0; i < pdcount; i++) {
         var no = i + 1;
-        var pid = $("td#" + no).siblings("pid").text();
-        var pqty = productJSON.products[pid + 1].product_qty;
-        var iprice = productJSON.products[pid + 1].product_standard_price;
+        var pid = $("td#" + no).siblings("#pid").text();
+        var pqty = productJSON.products[pid - 1].product_qty;
+        var iprice = productJSON.products[pid - 1].product_standard_price;
         var ttprice = pqty * iprice;
-        var vol = productJSON.products[pid + 1].product_volume;
+        var vol = productJSON.products[pid - 1].product_volume;
 
         products += '{ "product_id":' + pid + ', ';
         products += ' "product_qty":' + pqty + ', ';
         products += ' "invoice_price":' + iprice + ', ';
         products += ' "total_price":' + ttprice + ', ';
-        products += ' "volume":' + vol + '},';
+        if (i == pdcount - 1) {
+            products += ' "volume":' + vol + '}';
+        } else {
+            products += ' "volume":' + vol + '},';
+        }
+
 
     }
 
     products += ']}';
 
     var productList = JSON.parse(products);
+
+    console.log(productList);
 
     $.post(
         "http://127.0.0.1/ocp_dev/submitStockOrder",
@@ -248,7 +255,7 @@ function submitStockOrder() {
             "in_warehouse_id": in_warehouse_id,
             "period_demand": period_demand,
             "remark": remark,
-            "productList": productList
+            productList
         },
         function (result) {
             if (result.code == 1) {
