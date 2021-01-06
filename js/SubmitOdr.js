@@ -215,7 +215,7 @@ function submitStockOrder() {
     var in_warehouse_id = 2;
     var period_demand = $("#yy option:selected").val() + $("#mm option:selected").val() + $("#dd option:selected").val();
     var remark = $("#rmk").val();
-    var products = '{"productList":[';
+    var products = '';
 
     var pdcount = $("tbody#pdout tr:last td:first").text();
 
@@ -240,29 +240,30 @@ function submitStockOrder() {
 
     }
 
-    products += ']}';
+    var data = '{' +
+        '"invoice_title": "' + invoice_title + '",' +
+        '"retailer_id": ' + retailer_id + ',' +
+        '"out_warehouse_id": ' + out_warehouse_id + ',' +
+        '"in_warehouse_id": ' + in_warehouse_id + ',' +
+        '"period_demand": "' + period_demand + '",' +
+        '"remark": "' + remark + '",' +
+        '"productList": [' + products + ']' +
+        '}';
 
-    var productList = JSON.parse(products);
+    console.log(data);
 
-    console.log(productList);
-
-    $.post(
-        "http://127.0.0.1/ocp_dev/submitStockOrder",
-        {
-            "invoice_title": invoice_title,
-            "retailer_id": retailer_id,
-            "out_warehouse_id": out_warehouse_id,
-            "in_warehouse_id": in_warehouse_id,
-            "period_demand": period_demand,
-            "remark": remark,
-            productList
-        },
-        function (result) {
+    $.ajax({
+        url: "http://127.0.0.1/ocp_dev/submitStockOrder",
+        contentType: "application/json",
+        dataType: "json",
+        method: "POST",
+        data: data,
+        success: function (result) {
             if (result.code == 1) {
-                alert("提交成功");
+                $("#subSuc").modal();
             } else {
-                alert("提交失败");
+                alert("失败");
             }
         }
-    );
+    });
 }
