@@ -33,12 +33,21 @@ function addRow() {
         '<td id="rmk"></td>' +
         '<td id="reason"></td>' +
         '<td>' +
-        '    <a href="">提交</a>' +
+        '    <a href="" id="subOdr">提交</a>' +
         '    <a href="">编辑</a>' +
         '    <a href="">详情</a>' +
         '    <a href="">取消</a>' +
         '</td>' +
         '</tr>');
+
+    //事件重绑定
+    $("tr td").on("mouseenter", "#subOdr", function () {
+        $(this).click(function () {
+            event.preventDefault();
+            var odnum = $(this).parent().siblings("#num").text();
+            subOdrToRev(odnum);
+        });
+    });
 };
 
 //删除最后一行
@@ -136,7 +145,7 @@ function getUnhandList() {
             }
 
             for (var i = 0; i < result.wholesale_order.length; i++) {
-                if (result.stock_order[i].sto_status != 0) {
+                if (result.wholesale_order[i].wso_status != 0) {
                     continue;
                 }
                 var type = "批发订单";
@@ -151,6 +160,31 @@ function getUnhandList() {
             }
 
             delLastRow();
+        }
+    );
+}
+
+
+//提交审核
+$("a#subOdr").click(function () {
+    event.preventDefault();
+    var odnum = $(this).parent().siblings("#num").text();
+    subOdrToRev(odnum);
+});
+
+function subOdrToRev(odnum) {
+    $.get(
+        "http://127.0.0.1/ocp_dev/submitOrderReview",
+        {
+            "order_number": odnum,
+            "status": 1
+        },
+        function (result) {
+            if (result.code == 1) {
+                $("#subSucc").modal();
+            } else {
+                alert("失败");
+            }
         }
     );
 }
