@@ -99,7 +99,7 @@
                         <input type="text" style="width: 120px;">
                     </div>
                     <div class="col">
-                        <button type="button" class="btn btn-danger btn-sm">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="addRow()">
                             查询
                         </button>
                     </div>
@@ -111,7 +111,6 @@
                     <!--表头-->
                     <thead class="thead-light">
                         <tr>
-                            <th><input type="checkbox"></th>
                             <th>序号</th>
                             <th>下单日期</th>
                             <th>销售订单号</th>
@@ -129,22 +128,21 @@
                         </tr>
                     </thead>
                     <!--表身-->
-                    <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>1</td>
+                    <tbody id="pdout">
+                        <tr id="item">
+                            <td id="1">1</td>
+                            <td id="date"></td>
+                            <td id="num"></td>
+                            <td id="type"></td>
+                            <td id="status"></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td id="rmk"></td>
+                            <td id="reason"></td>
                             <td>
                                 <a href="">提交</a>
                                 <a href="">编辑</a>
@@ -195,6 +193,9 @@
     <!-- 自定义 js -->
     <script src="js/OCP.js"></script>
     <script src="js/UnhandOdr.js"></script>
+    <script>
+        getUnhandList();
+    </script>
 </body>
 
 </html>

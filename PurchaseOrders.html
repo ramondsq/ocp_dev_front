@@ -129,22 +129,21 @@
                         </tr>
                     </thead>
                     <!--表身-->
-                    <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>1</td>
+                    <tbody id="pdout">
+                        <tr id="item">
+                            <td id="1">1</td>
+                            <td id="date"></td>
+                            <td id="num"></td>
+                            <td id="type"></td>
+                            <td id="status"></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td id="rmk"></td>
+                            <td id="reason"></td>
                             <td>
                                 <a href="">提交</a>
                                 <a href="">编辑</a>
@@ -194,7 +193,10 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- 自定义 js -->
     <script src="js/OCP.js"></script>
-    <script src="js/PurOdr.js"></script>
+    <script src="js/UnhandOdr.js"></script>
+    <script>
+        getList();
+    </script>
 </body>
 
 </html>
