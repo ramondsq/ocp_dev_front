@@ -149,7 +149,7 @@
                     <div class="col"><input type="checkbox">买家留言</div>
                     <div class="col"><input type="checkbox">买家备注</div>
                     <div class="col">
-                        <button type="button" class="btn btn-danger btn-sm">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="getRetailerOdr()">
                             查询
                         </button>
                     </div>
@@ -161,7 +161,6 @@
                         <!--表头-->
                         <thead class="thead-light">
                             <tr>
-                                <th><input type="checkbox"></th>
                                 <th>序号</th>
                                 <th>订单来源</th>
                                 <th>经销商</th>
@@ -183,27 +182,26 @@
                             </tr>
                         </thead>
                         <!--表身-->
-                        <tbody>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>1</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                        <tbody id="pdout">
+                            <tr id="item">
+                                <td id="1">1</td>
+                                <td id="source"></td>
+                                <td id="rtname"></td>
+                                <td id="store"></td>
+                                <td id="odrstatus"></td>
+                                <td id="shpstatus"></td>
+                                <td id="odrdate"></td>
+                                <td id="paidate"></td>
+                                <td id="shipdate"></td>
+                                <td id="odrprice"></td>
+                                <td id="actprice"></td>
+                                <td id="weight"></td>
+                                <td id="freight"></td>
+                                <td id="addr"></td>
+                                <td id="recname"></td>
+                                <td id="phone"></td>
+                                <td id="expco"></td>
+                                <td id="expno"></td>
                             </tr>
                         </tbody>
                     </table>
