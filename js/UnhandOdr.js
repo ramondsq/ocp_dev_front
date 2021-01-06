@@ -36,7 +36,7 @@ function addRow() {
         '    <a href="" id="subOdr">提交</a>' +
         '    <a href="">编辑</a>' +
         '    <a href="">详情</a>' +
-        '    <a href="">取消</a>' +
+        '    <a href="" id="cancel">取消</a>' +
         '</td>' +
         '</tr>');
 
@@ -46,6 +46,13 @@ function addRow() {
             event.preventDefault();
             var odnum = $(this).parent().siblings("#num").text();
             subOdrToRev(odnum);
+        });
+    });
+    $("tr td").on("mouseenter", "#cancel", function () {
+        $(this).click(function () {
+            event.preventDefault();
+            var odnum = $(this).parent().siblings("#num").text();
+            cancelOdr(odnum);
         });
     });
 };
@@ -171,7 +178,6 @@ $("a#subOdr").click(function () {
     var odnum = $(this).parent().siblings("#num").text();
     subOdrToRev(odnum);
 });
-
 function subOdrToRev(odnum) {
     $.get(
         "http://127.0.0.1/ocp_dev/submitOrderReview",
@@ -184,6 +190,27 @@ function subOdrToRev(odnum) {
                 $("#subSucc").modal();
             } else {
                 alert("失败");
+            }
+        }
+    );
+}
+
+
+//取消订单
+$("a#cancel").click(function () {
+    event.preventDefault();
+    var odnum = $(this).parent().siblings("#num").text();
+    cancelOdr(odnum);
+});
+function cancelOdr(odnum) {
+    $.get(
+        "http://127.0.0.1/ocp_dev/cancelOrder",
+        {
+            "order_number": odnum,
+        },
+        function (result) {
+            if (result.code == 1) {
+                $("#cancelSucc").modal();
             }
         }
     );
