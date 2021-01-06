@@ -221,6 +221,13 @@ function submitOrder() {
     }
 };
 
+//分类保存订单
+function saveOrder() {
+    if (odrType == "ws") {
+        submitWSOrder(0);
+    }
+};
+
 //提交备货订单
 function submitStockOrder() {
     var invoice_title = "抬头1";
