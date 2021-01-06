@@ -22,9 +22,12 @@ $("#ws").click(function () {
     //增加“收货人”
     $("#row3").append("<div class='col'>收货人：<span id='rtconta'>张祥意</span></div>");
     //增加“联系电话”
-    $("#row3").append("<div class='col'>联系电话：<input type='text'></div>");
+    $("#row3").append("<div class='col'>联系电话：<input type='text' id='phonum'></div>");
     //增加“自提”选项
-    $("#picup").prepend("<option value='self'>自提</option>");
+    $("#picup").prepend("<option value='自提'>自提</option>");
+    $("#picup").prepend("<option value='铁运'>铁运</option>");
+    $("#picup").prepend("<option value='海运'>海运</option>");
+    $("#picup").prepend("<option value='汽运'>汽运</option>");
     //增加“自提地址”
     $("#row4").prepend("<div class='col'>自提地址：<span id='picloc'>广东省佛山市顺德区容桂容边路保供物流园B库</span></div>");
     getRetInfo();
@@ -208,7 +211,17 @@ function refreshTableButtom() {
     $("span#totalPrice").text(totalPrice);
 }
 
-//提交备货订单函数
+//分类提交订单
+function submitOrder() {
+    if (odrType == "sto") {
+        submitStockOrder();
+    }
+    else if (odrType == "ws") {
+        submitWSOrder(1);
+    }
+};
+
+//提交备货订单
 function submitStockOrder() {
     var invoice_title = "抬头1";
     var out_warehouse_id = $("#whs option:selected").val();
@@ -266,4 +279,67 @@ function submitStockOrder() {
             }
         }
     });
-}
+};
+
+//提交批发订单
+function submitWSOrder(stat) {
+    var invoice_title = "抬头x";
+    var out_warehouse_id = $("#whs option:selected").val();
+    var phone = $("#phonum").val();
+    var pickup_method = $("#picup option:selected").val();
+    var remark = $("#rmk").val();
+    var products = '';
+
+    var pdcount = $("tbody#pdout tr:last td:first").text();
+
+    for (var i = 0; i < pdcount; i++) {
+        var no = i + 1;
+        var pid = $("td#" + no).siblings("#pid").text();
+        var pqty = productJSON.products[pid - 1].product_qty;
+        var iprice = productJSON.products[pid - 1].product_standard_price;
+        var ttprice = pqty * iprice;
+        var vol = productJSON.products[pid - 1].product_volume;
+
+        products += '{ "product_id":' + pid + ', ';
+        products += ' "product_qty":' + pqty + ', ';
+        products += ' "invoice_price":' + iprice + ', ';
+        products += ' "total_price":' + ttprice + ', ';
+        if (i == pdcount - 1) {
+            products += ' "volume":' + vol + '}';
+        } else {
+            products += ' "volume":' + vol + '},';
+        }
+
+
+    }
+
+    var data = '{' +
+        '"invoice_title": "' + invoice_title + '",' +
+        '"retailer_id": ' + retailer_id + ',' +
+        '"out_warehouse_id": ' + out_warehouse_id + ',' +
+        '"detail_address": "广东省佛山市顺德区",' +
+        '"receiver": "张祥意",' +
+        '"phone": "' + phone + '",' +
+        '"pickup_method": "' + pickup_method + '",' +
+        '"remark": "' + remark + '",' +
+        '"status": ' + stat + ',' +
+        '"productList": [' + products + ']' +
+        '}';
+
+    console.log(data);
+
+    $.ajax({
+        url: "http://127.0.0.1/ocp_dev/submitWSOrder",
+        contentType: "application/json",
+        dataType: "json",
+        method: "POST",
+        data: data,
+        success: function (result) {
+            if (result.code == 1) {
+                $("#subSuc").modal();
+            } else {
+                alert("失败");
+            }
+        }
+    });
+};
