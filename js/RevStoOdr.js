@@ -200,6 +200,23 @@ function subRev(stat, num) {
     );
 }
 
+//提交审核操作表单
+function subRevR(stat, num) {
+    $.get(
+        "http://127.0.0.1/ocp_dev/reviewStockOrder",
+        {
+            "order_number": num,
+            "status": stat,
+            "rereviewer_user_name": username
+        },
+        function (res) {
+            if (res.code == 1) {
+                $("#succ").modal();
+            }
+        }
+    );
+}
+
 //‘复核’操作
 $("a#rrev").click(function () {
     event.preventDefault();
@@ -210,12 +227,12 @@ $("a#rrev").click(function () {
     $("#pass").click(function () {
         status = 3;
         console.log(status);
-        subRev(status, odnum);
+        subRevR(status, odnum);
     });
     $("#notpass").click(function () {
         status = 4;
         console.log(status);
-        subRev(status, odnum);
+        subRevR(status, odnum);
     });
 
 });

@@ -35,6 +35,25 @@
             </div>
         </div>
     </div>
+    <!-- 模态框：操作成功 -->
+    <div class="modal fade" id="succ">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">操作成功</h4>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        onclick="location.reload()">好</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
     <!--顶栏-->
@@ -193,7 +212,7 @@
                             <td id="vol"></td>
                             <td>
                                 <a href="">查看详情</a>
-                                <a href="">审核</a>
+                                <a href="" id="rev">审核</a>
                             </td>
                         </tr>
                     </tbody>
@@ -243,7 +262,7 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- 自定义 js -->
     <script src="js/OCP.js"></script>
-    <script src="js/RevStoOdr.js"></script>
+    <script src="js/RevWSOdr.js"></script>
     <script>
         getWSOdr(1);
     </script>
