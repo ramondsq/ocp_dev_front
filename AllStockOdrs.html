@@ -11,7 +11,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 自定义css -->
-    <link href="css/ReRevStoOdr.css" rel="stylesheet">
+    <link href="css/RevStoOdr.css" rel="stylesheet">
 </head>
 
 <body>
@@ -150,65 +150,63 @@
                     </div>
                 </div>
                 <br />
-
-                <!-- 表格 -->
-                <table class="table table-bordered">
-                    <!--表头-->
-                    <thead class="thead-light">
-                        <tr>
-                            <th><input type="checkbox"></th>
-                            <th>序号</th>
-                            <th>提交备货计划日期</th>
-                            <th>备货计划订单编号</th>
-                            <th>经销商编码</th>
-                            <th>经销商名称</th>
-                            <th>区域</th>
-                            <th>产品编码</th>
-                            <th>产品型号</th>
-                            <th>品类</th>
-                            <th>总数量</th>
-                            <th>开票价格</th>
-                            <th>总金额</th>
-                            <th>总体积（m³）</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <!--表身-->
-                    <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <a href="">查看详情</a>
-                                <a href="" data-toggle="modal" data-target="#myModal">审核</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <!--表尾-->
-                    <tfoot>
-                        <tr>
-                            <td colspan="15">
-                                <b>小计</b>
-                                数量：<span>200</span>件
-                                体积：<span>100</span>m³
-                                订单金额：<span>3550.00</span>元
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-
+                <div style="overflow-x: scroll">
+                    <!-- 表格 -->
+                    <table class="table table-bordered">
+                        <!--表头-->
+                        <thead class="thead-light">
+                            <tr>
+                                <th>序号</th>
+                                <th>提交备货计划日期</th>
+                                <th>备货计划订单编号</th>
+                                <th>经销商编码</th>
+                                <th>经销商名称</th>
+                                <th>区域</th>
+                                <th>产品编码</th>
+                                <th>产品型号</th>
+                                <th>品类</th>
+                                <th>总数量</th>
+                                <th>开票价格</th>
+                                <th>总金额</th>
+                                <th>总体积（m³）</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <!--表身-->
+                        <tbody id="pdout">
+                            <tr id="item">
+                                <td id="1">1</td>
+                                <td id="subDate"></td>
+                                <td id="odNum"></td>
+                                <td id="rtID"></td>
+                                <td id="rtName"></td>
+                                <td id="rtArea"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td id="price"></td>
+                                <td id="vol"></td>
+                                <td>
+                                    <a href="">查看详情</a>
+                                    <a href="">审核</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <!--表尾-->
+                        <tfoot>
+                            <tr>
+                                <td colspan="15">
+                                    <b>小计</b>
+                                    数量：<span>200</span>件
+                                    体积：<span>100</span>m³
+                                    订单金额：<span>3550.00</span>元
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
                 <!--页码-->
                 <div>
                     <ul class="pagination">
@@ -242,7 +240,13 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- 自定义 js -->
     <script src="js/OCP.js"></script>
-    <script src="js/ReRevStoOdr.js"></script>
+    <script src="js/RevStoOdr.js"></script>
+    <script>
+        getRevOdr(1);
+        getRevOdr(2);
+        getRevOdr(3);
+        getRevOdr(4);
+    </script>
 </body>
 
 </html>

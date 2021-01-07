@@ -28,7 +28,8 @@
                 <!-- 模态框主体 -->
                 <div class="modal-body">
                     <button type="button" class="btn btn-danger" data-dismiss="modal" id="pass">审核通过</button>
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" id="notpass">不通过</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+                        id="notpass">不通过</button>
                 </div>
 
             </div>
@@ -134,7 +135,7 @@
                 <div class="row">
                     <div class="col">经销商名称：<input type="text"></div>
                     <div class="col">订单编号：<input type="text"></div>
-                    
+
                 </div>
                 <br />
 
@@ -158,16 +159,15 @@
                     <!--表头-->
                     <thead class="thead-light">
                         <tr>
-                            <th><input type="checkbox"></th>
                             <th>序号</th>
                             <th>下单日期</th>
                             <th>订单编号</th>
-                            <th>产品编码</th>
-                            <th>产品型号</th>
-                            <th>品类</th>
                             <th>经销商编码</th>
                             <th>经销商名称</th>
                             <th>区域</th>
+                            <th>产品编码</th>
+                            <th>产品型号</th>
+                            <th>品类</th>
                             <th>总数量</th>
                             <th>开票价格</th>
                             <th>总金额</th>
@@ -176,25 +176,24 @@
                         </tr>
                     </thead>
                     <!--表身-->
-                    <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>1</td>
+                    <tbody id="pdout">
+                        <tr id="item">
+                            <td id="1">1</td>
+                            <td id="subDate"></td>
+                            <td id="odNum"></td>
+                            <td id="rtID"></td>
+                            <td id="rtName"></td>
+                            <td id="rtArea"></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td id="price"></td>
+                            <td id="vol"></td>
                             <td>
                                 <a href="">查看详情</a>
-                                <a href="" data-toggle="modal" data-target="#myModal">审核</a>
+                                <a href="">审核</a>
                             </td>
                         </tr>
                     </tbody>
@@ -244,7 +243,10 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- 自定义 js -->
     <script src="js/OCP.js"></script>
-    <script src="js/RevWSOdr.js"></script>
+    <script src="js/RevStoOdr.js"></script>
+    <script>
+        getWSOdr(1);
+    </script>
 </body>
 
 </html>

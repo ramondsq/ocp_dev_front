@@ -233,7 +233,7 @@ function submitStockOrder() {
     var invoice_title = "抬头1";
     var out_warehouse_id = $("#whs option:selected").val();
     var in_warehouse_id = 2;
-    var period_demand = $("#yy option:selected").val() + $("#mm option:selected").val() + $("#dd option:selected").val();
+    var period_demand = $("#yy option:selected").val() + '-' + $("#mm option:selected").val() + '-' + $("#dd option:selected").val();
     var remark = $("#rmk").val();
     var products = '';
 

@@ -118,3 +118,35 @@ function getRetailerOdr() {
         }
     );
 };
+
+//获取所有零售订单
+function getAllRtOdrs() {
+    $.get(
+        "http://127.0.0.1/ocp_dev/getAllRetailOrders",
+        function (result) {
+            for (var i = 0; i < result.retail_order.length; i++) {
+                var order = result.retail_order;
+                $("tbody#pdout tr:last td#source").html(order[i].rto_source_website);
+                $("tbody#pdout tr:last td#rtname").html(order[i].rto_retailer_id);
+                $("tbody#pdout tr:last td#store").html(order[i].rto_source_store);
+                $("tbody#pdout tr:last td#odrstatus").html(getStatus(order[i].rto_order_status));
+                $("tbody#pdout tr:last td#shpstatus").html(getShipStatus(order[i].rto_shipment_status));
+                $("tbody#pdout tr:last td#odrdate").html(order[i].rto_order_date.slice(0, 10));
+                $("tbody#pdout tr:last td#paidate").html(order[i].rto_paid_date.slice(0, 10));
+                $("tbody#pdout tr:last td#shipdate").html(order[i].rto_shipment_date.slice(0, 10));
+                $("tbody#pdout tr:last td#odrprice").html(order[i].rto_order_price);
+                $("tbody#pdout tr:last td#actprice").html(order[i].rto_actually_paid);
+                $("tbody#pdout tr:last td#weight").html(order[i].rto_weight);
+                $("tbody#pdout tr:last td#freight").html(order[i].rto_freight);
+                $("tbody#pdout tr:last td#addr").html(order[i].rto_shipping_address);
+                $("tbody#pdout tr:last td#recname").html(order[i].rto_receiver_name);
+                $("tbody#pdout tr:last td#phone").html(order[i].rto_receiver_phone);
+                $("tbody#pdout tr:last td#expco").html(order[i].rto_express_company);
+                $("tbody#pdout tr:last td#expno").html(order[i].rto_express_number);
+
+                addRow();
+            }
+            delLastRow();
+        }
+    );
+}

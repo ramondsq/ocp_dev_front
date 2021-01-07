@@ -82,6 +82,11 @@ body {
   * 表
   */
 
+.table {
+  width: 1500px;
+  text-align: center;
+}
+
 thead tr th {
   text-align: center;
 }
@@ -106,8 +111,6 @@ tfoot tr td {
   padding: 10px 0;
   margin-left: 5px;
 }
-
-
 
 /*按钮*/
 
