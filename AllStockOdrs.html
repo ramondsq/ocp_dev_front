@@ -36,6 +36,90 @@
         </div>
     </div>
 
+    <!-- 模态框：商品详情 -->
+    <div class="modal fade" id="detailInfo">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">订单详情</h4>
+                </div>
+
+                <!-- 模态框主体 -->
+                <div class="modal-body text-left">
+
+                    <div class="row">
+                        <div class="col">
+                            出货仓库：<span id="outWh"></span>
+                        </div>
+                        <div class="col">
+                            区域：<span id="area"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            订单编号：<span id="num"></span>
+                        </div>
+                        <div class="col">
+                            经销商编码：<span id="retid"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            备注：<span id="rmk"></span>
+                        </div>
+                        <div class="col">
+                            店铺名称：<span id="store"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            体积：<span id="volume"></span>
+                        </div>
+                        <div class="col">
+                            电话：<span id="phone"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            价格：<span id="pri"></span>
+                        </div>
+                        <div class="col">
+                            经销商名称：<span id="retname"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            数量：<span id="qty"></span>
+                        </div>
+                        <div class="col">
+                            联系人：<span id="cont"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            审核人：<span id="reviewer"></span>
+                        </div>
+                        <div class="col">
+                            提交时间：<span id="submitDate"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!--顶栏-->
     <nav class="navbar navbar-dark fixed-top flex-md-nowrap p-0 shadow">
@@ -125,15 +209,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="col">经销商编码：<input type="text"></div>
-                    <div class="col">订单编号：<input type="text"></div>
-                    <div class="col">订单日期：<input type="text"></div>
-                    <div class="col">至 <input type="text"></div>
+                    <div class="col">经销商编码：<input type="text" id="rtrid"></div>
+                    <div class="col">订单编号：<input type="text" id="odrid"></div>
+                    <div class="col">订单提交日期：<input type="text" id="odsubdate"></div>
                 </div>
                 <br />
 
                 <div class="row">
-                    <div class="col">经销商名称：<input type="text"></div>
+                    <div class="col">经销商名称：<input type="text" id="rtrname"></div>
                     <div class="col">区域：<input type="text"></div>
                     <div class="col">
                         订单状态：
@@ -146,7 +229,7 @@
                         </select>
                     </div>
                     <div class="col">
-                        <button type="button" class="btn btn-danger btn-sm">查询</button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="inqOdrA()">查询</button>
                     </div>
                 </div>
                 <br />
@@ -189,7 +272,7 @@
                                 <td id="price"></td>
                                 <td id="vol"></td>
                                 <td>
-                                    <a href="">查看详情</a>
+                                    <a href="" id="detail">查看详情</a>
                                     <a href="">审核</a>
                                 </td>
                             </tr>

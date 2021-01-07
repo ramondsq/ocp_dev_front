@@ -37,7 +37,7 @@ function addRow(type) {
         '<td id="price"></td>' +
         '<td id="vol"></td>' +
         '<td>' +
-        '    <a href="">查看详情</a>' +
+        '    <a href="" id="detail">查看详情</a>' +
         '    <a href="" id="' + type + '">审核</a>' +
         '</td>' +
         '</tr>');
@@ -85,6 +85,15 @@ function addRow(type) {
             });
         });
     }
+
+    $("tr td").on("mouseenter", "#detail", function () {
+        $(this).click(function () {
+            event.preventDefault();
+            var odnum = $(this).parent().siblings("#odNum").text();
+            $("#detailInfo").modal();
+            getDetail(odnum);
+        });
+    });
 
 };
 
@@ -236,3 +245,293 @@ $("a#rrev").click(function () {
     });
 
 });
+
+//点击‘查看详情’
+$("a#detail").click(function () {
+    event.preventDefault();
+    var odnum = $(this).parent().siblings("#odNum").text();
+    $("#detailInfo").modal();
+    getDetail(odnum);
+});
+function getDetail(num) {
+    $.get(
+        "http://127.0.0.1/ocp_dev/getOrderDetail",
+        { "order_number": num },
+        function (res) {
+            var od;
+            if (res.orders.wso[0] != null) {
+                od = res.orders.wso[0];
+            } else {
+                od = res.orders.sto[0];
+            }
+
+            $("div span#outWh").html(od.out_warehouse_id);
+            $("div span#area").html(od.retailer_area);
+
+            $("div span#num").html(od.order_number);
+            $("div span#retid").html(od.retailer_id);
+
+            $("div span#rmk").html(od.remark);
+            $("div span#store").html(od.retailer_store_name);
+
+            $("div span#volume").html(od.volume);
+            $("div span#phone").html(od.retailer_phone);
+
+            $("div span#pri").html(od.price);
+            $("div span#retname").html(od.retailer_name);
+
+            $("div span#qty").html(od.product_qty);
+            $("div span#cont").html(od.retailer_contact_name);
+
+            $("div span#reviewer").html(od.reviewer_user_name);
+            $("div span#submitDate").html(od.submit_datetime);
+        }
+    );
+}
+
+//查询订单
+function inqOdr() {
+    var order_number = $("#odrid").val();
+    var retailer_id = $("#rtrid").val();
+    var retailer_name = $("#rtname").val();
+    if (order_number != '') {
+        delRows();
+        $.get(
+            "http://127.0.0.1/ocp_dev/inquireWSOrders",
+            {
+                "order_number": order_number,
+                "status": 1
+            },
+            function (res) {
+
+                var od = res.orders.wso[0];
+                $("tbody#pdout tr:last td#subDate").html(od.submit_datetime.slice(0, 10));
+                $("tbody#pdout tr:last td#odNum").html(od.order_number);
+                $("tbody#pdout tr:last td#rtID").html(od.retailer_id);
+                $("tbody#pdout tr:last td#rtName").html(od.retailer_name);
+                $("tbody#pdout tr:last td#rtArea").html(od.retailer_area);
+                $("tbody#pdout tr:last td#price").html(od.price);
+                $("tbody#pdout tr:last td#vol").html(od.volume);
+            }
+        );
+    }
+    else if (retailer_id != '') {
+        delRows();
+        var number = String(retailer_id);
+        $.get(
+            "http://127.0.0.1/ocp_dev/inquireWSOrders",
+            {
+                "retailer_id": number,
+                "status": 1
+            },
+            function (res) {
+
+                var od = res.orders.wso;
+                for (var i = 0; i < od.length; i++) {
+                    $("tbody#pdout tr:last td#subDate").html(od[i].submit_datetime.slice(0, 10));
+                    $("tbody#pdout tr:last td#odNum").html(od[i].order_number);
+                    $("tbody#pdout tr:last td#rtID").html(od[i].retailer_id);
+                    $("tbody#pdout tr:last td#rtName").html(od[i].retailer_name);
+                    $("tbody#pdout tr:last td#rtArea").html(od[i].retailer_area);
+                    $("tbody#pdout tr:last td#price").html(od[i].price);
+                    $("tbody#pdout tr:last td#vol").html(od[i].volume);
+                    addRow("rev");
+                }
+
+            }
+        );
+    }
+    else if (retailer_name != '') {
+        delRows();
+        $.get(
+            "http://127.0.0.1/ocp_dev/inquireWSOrders",
+            {
+                "retailer_id": retailer_name,
+                "status": 1
+            },
+            function (res) {
+
+                var od = res.orders.wso;
+                for (var i = 0; i < od.length; i++) {
+                    $("tbody#pdout tr:last td#subDate").html(od[i].submit_datetime.slice(0, 10));
+                    $("tbody#pdout tr:last td#odNum").html(od[i].order_number);
+                    $("tbody#pdout tr:last td#rtID").html(od[i].retailer_id);
+                    $("tbody#pdout tr:last td#rtName").html(od[i].retailer_name);
+                    $("tbody#pdout tr:last td#rtArea").html(od[i].retailer_area);
+                    $("tbody#pdout tr:last td#price").html(od[i].price);
+                    $("tbody#pdout tr:last td#vol").html(od[i].volume);
+                    addRow("rev");
+                }
+
+            }
+        );
+    }
+}
+//清空行
+function delRows() {
+    var num = $("tbody#pdout tr:last td:first").text();
+    var number = 0;
+    if (num != null) {
+        var number = Number(num);
+    }
+
+    for (var i = 0; i < number - 1; i++) {
+        delLastRow();
+    }
+}
+
+//查询订单
+function inqOdrR() {
+    var order_number = $("#odrid").val();
+    var retailer_id = $("#rtrid").val();
+    var retailer_name = $("#rtname").val();
+    if (order_number != '') {
+        delRows();
+        $.get(
+            "http://127.0.0.1/ocp_dev/inquireWSOrders",
+            {
+                "order_number": order_number,
+                "status": 2
+            },
+            function (res) {
+
+                var od = res.orders.wso[0];
+                $("tbody#pdout tr:last td#subDate").html(od.submit_datetime.slice(0, 10));
+                $("tbody#pdout tr:last td#odNum").html(od.order_number);
+                $("tbody#pdout tr:last td#rtID").html(od.retailer_id);
+                $("tbody#pdout tr:last td#rtName").html(od.retailer_name);
+                $("tbody#pdout tr:last td#rtArea").html(od.retailer_area);
+                $("tbody#pdout tr:last td#price").html(od.price);
+                $("tbody#pdout tr:last td#vol").html(od.volume);
+            }
+        );
+    }
+    else if (retailer_id != '') {
+        delRows();
+        var number = String(retailer_id);
+        $.get(
+            "http://127.0.0.1/ocp_dev/inquireWSOrders",
+            {
+                "retailer_id": number,
+                "status": 2
+            },
+            function (res) {
+
+                var od = res.orders.wso;
+                for (var i = 0; i < od.length; i++) {
+                    $("tbody#pdout tr:last td#subDate").html(od[i].submit_datetime.slice(0, 10));
+                    $("tbody#pdout tr:last td#odNum").html(od[i].order_number);
+                    $("tbody#pdout tr:last td#rtID").html(od[i].retailer_id);
+                    $("tbody#pdout tr:last td#rtName").html(od[i].retailer_name);
+                    $("tbody#pdout tr:last td#rtArea").html(od[i].retailer_area);
+                    $("tbody#pdout tr:last td#price").html(od[i].price);
+                    $("tbody#pdout tr:last td#vol").html(od[i].volume);
+                    addRow("rrev");
+                }
+
+            }
+        );
+    }
+    else if (retailer_name != '') {
+        delRows();
+        $.get(
+            "http://127.0.0.1/ocp_dev/inquireWSOrders",
+            {
+                "retailer_id": retailer_name,
+                "status": 2
+            },
+            function (res) {
+
+                var od = res.orders.wso;
+                for (var i = 0; i < od.length; i++) {
+                    $("tbody#pdout tr:last td#subDate").html(od[i].submit_datetime.slice(0, 10));
+                    $("tbody#pdout tr:last td#odNum").html(od[i].order_number);
+                    $("tbody#pdout tr:last td#rtID").html(od[i].retailer_id);
+                    $("tbody#pdout tr:last td#rtName").html(od[i].retailer_name);
+                    $("tbody#pdout tr:last td#rtArea").html(od[i].retailer_area);
+                    $("tbody#pdout tr:last td#price").html(od[i].price);
+                    $("tbody#pdout tr:last td#vol").html(od[i].volume);
+                    addRow("rrev");
+                }
+
+            }
+        );
+    }
+}
+
+//查询订单所有
+function inqOdrA() {
+    var order_number = $("#odrid").val();
+    var retailer_id = $("#rtrid").val();
+    var retailer_name = $("#rtname").val();
+
+    if (order_number != '') {
+        delRows();
+        $.get(
+            "http://127.0.0.1/ocp_dev/inquireWSOrders",
+            {
+                "order_number": order_number
+            },
+            function (res) {
+
+                var od = res.orders.wso[0];
+                $("tbody#pdout tr:last td#subDate").html(od.submit_datetime.slice(0, 10));
+                $("tbody#pdout tr:last td#odNum").html(od.order_number);
+                $("tbody#pdout tr:last td#rtID").html(od.retailer_id);
+                $("tbody#pdout tr:last td#rtName").html(od.retailer_name);
+                $("tbody#pdout tr:last td#rtArea").html(od.retailer_area);
+                $("tbody#pdout tr:last td#price").html(od.price);
+                $("tbody#pdout tr:last td#vol").html(od.volume);
+            }
+        );
+    }
+    else if (retailer_id != '') {
+        delRows();
+        var number = String(retailer_id);
+        $.get(
+            "http://127.0.0.1/ocp_dev/inquireWSOrders",
+            {
+                "retailer_id": number
+            },
+            function (res) {
+
+                var od = res.orders.wso;
+                for (var i = 0; i < od.length; i++) {
+                    $("tbody#pdout tr:last td#subDate").html(od[i].submit_datetime.slice(0, 10));
+                    $("tbody#pdout tr:last td#odNum").html(od[i].order_number);
+                    $("tbody#pdout tr:last td#rtID").html(od[i].retailer_id);
+                    $("tbody#pdout tr:last td#rtName").html(od[i].retailer_name);
+                    $("tbody#pdout tr:last td#rtArea").html(od[i].retailer_area);
+                    $("tbody#pdout tr:last td#price").html(od[i].price);
+                    $("tbody#pdout tr:last td#vol").html(od[i].volume);
+                    addRow("rev");
+                }
+
+            }
+        );
+    }
+    else if (retailer_name != '') {
+        delRows();
+        $.get(
+            "http://127.0.0.1/ocp_dev/inquireWSOrders",
+            {
+                "retailer_id": retailer_name
+            },
+            function (res) {
+
+                var od = res.orders.wso;
+                for (var i = 0; i < od.length; i++) {
+                    $("tbody#pdout tr:last td#subDate").html(od[i].submit_datetime.slice(0, 10));
+                    $("tbody#pdout tr:last td#odNum").html(od[i].order_number);
+                    $("tbody#pdout tr:last td#rtID").html(od[i].retailer_id);
+                    $("tbody#pdout tr:last td#rtName").html(od[i].retailer_name);
+                    $("tbody#pdout tr:last td#rtArea").html(od[i].retailer_area);
+                    $("tbody#pdout tr:last td#price").html(od[i].price);
+                    $("tbody#pdout tr:last td#vol").html(od[i].volume);
+                    addRow("rev");
+                }
+
+            }
+        );
+    }
+}
